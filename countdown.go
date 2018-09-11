@@ -83,10 +83,8 @@ func add(file *os.File, date *Date) {
 func countdown(file *os.File) {
 	// clear screen
 	tm.Clear()
-
 	var dates, _ = ioutil.ReadAll(file)
 	var timestamps Dates
-
 	// unmarshal dates
 	json.Unmarshal(dates, &timestamps)
 	// update screen per second
