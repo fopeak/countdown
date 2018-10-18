@@ -61,40 +61,40 @@ func main() {
 			fmt.Println("set countdown name and timestamp like this, countdown add endoftheworld 1536393600")
 		}
 		return
+	case "clear":
+		// clear all in dates.json
+		ioutil.WriteFile("dates.json", nil, 0644)
+		return
 	}
 }
 
 func add(file *os.File, date *Date) {
-	var dates Dates
-	old, _ := ioutil.ReadAll(file)
-	json.Unmarshal(old, &dates)
-	dates.Dates = append(dates.Dates, *date)
-	json, err := json.Marshal(dates)
+	var jsonData Dates
+	fileOutput, _ := ioutil.ReadAll(file)
+	json.Unmarshal(fileOutput, &jsonData)
+	jsonData.Dates = append(jsonData.Dates, *date)
+	jsonNew, err := json.Marshal(jsonData)
 	if err != nil {
 		panic(err.Error)
 	}
-	//a, err := file.Write(json)
-	if err != nil {
-		fmt.Println(err)
-	}
-	ioutil.WriteFile("dates.json", json, 0644)
+	ioutil.WriteFile("dates.json", jsonNew, 0644)
 }
 
 func countdown(file *os.File) {
 	// clear screen
 	tm.Clear()
-	var dates, _ = ioutil.ReadAll(file)
-	var timestamps Dates
+	var fileOutput, _ = ioutil.ReadAll(file)
+	var jsonData Dates
 	// unmarshal dates
-	json.Unmarshal(dates, &timestamps)
+	json.Unmarshal(fileOutput, &jsonData)
 	// update screen per second
 	ticker := time.NewTicker(time.Second)
 	// color set
 	color.Set(color.FgHiBlue)
 	for range ticker.C {
 		tm.MoveCursor(1, 1)
-		for i := range timestamps.Dates {
-			tm.Println(timestamps.Dates[i].Name+":", humanizeDuration(time.Until(time.Unix(timestamps.Dates[i].Timestamp, 0))))
+		for i := range jsonData.Dates {
+			tm.Println(jsonData.Dates[i].Name+":", humanizeDuration(time.Until(time.Unix(jsonData.Dates[i].Timestamp, 0))))
 		}
 		tm.Flush() // Call it every time at the end of rendering
 	}
