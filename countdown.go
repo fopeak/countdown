@@ -103,6 +103,7 @@ func countdown(file *os.File) {
 
 // humanizeDuration humanizes time.Duration output to a meaningful value,
 // golang's default ``time.Duration`` output is badly formatted and unreadable.
+// https://gist.github.com/harshavardhana/327e0577c4fed9211f65
 func humanizeDuration(duration time.Duration) string {
 	if duration.Seconds() < 60.0 {
 		return fmt.Sprintf("%d seconds", int64(duration.Seconds()))
