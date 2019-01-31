@@ -5,11 +5,8 @@ you can create a countdown list with this. (i don't know why i made this)
 </div>
 
 # commands
-```sh
-./countdown c
-```
-to countdown.
-```sh
-./countdown add name unixtimestamp
-```
-to add new countdown.
+| argument  | for what |
+| ------------- | ------------- |
+| countdown c  | to countdown  |
+| countdown add name unixtimestamp  | to add countdown  |
+| countdown clear  | to clear countdowns  |
